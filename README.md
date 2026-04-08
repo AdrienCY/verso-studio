@@ -6,3 +6,5 @@ Site vitrine haut de gamme pour une agence de creation digitale, theme sombre ci
 - **Sections :** Hero cinematique, marquee clients, services avec spotlight cards, portfolio en scroll horizontal, methode, temoignages rotatifs, contact
 - **Skill utilise :** frontend-design (plugin Anthropic)
 - **Date de creation :** Avril 2026
+
+**Voir le site en ligne :** [https://adriency.github.io/verso-studio/](https://adriency.github.io/verso-studio/)
