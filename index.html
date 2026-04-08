@@ -976,11 +976,225 @@ textarea.form-input {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
+
+/* ========== PRELOADER ========== */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.6s var(--ease), visibility 0.6s;
+}
+.preloader.done {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.preloader-logo {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.8s var(--ease-out) 0.2s forwards;
+}
+.preloader-logo span { color: var(--accent); }
+.preloader-bar {
+  width: 120px;
+  height: 2px;
+  background: var(--border);
+  margin-top: 32px;
+  border-radius: 2px;
+  overflow: hidden;
+  opacity: 0;
+  animation: fadeUp 0.6s var(--ease-out) 0.5s forwards;
+}
+.preloader-bar-fill {
+  height: 100%;
+  background: var(--accent);
+  width: 0%;
+  animation: preloaderFill 1.4s var(--ease) 0.6s forwards;
+}
+@keyframes preloaderFill {
+  0% { width: 0%; }
+  60% { width: 80%; }
+  100% { width: 100%; }
+}
+
+/* ========== CUSTOM CURSOR ========== */
+.cursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99998;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s var(--spring), height 0.3s var(--spring), border-color 0.3s var(--ease), background 0.3s var(--ease);
+  mix-blend-mode: difference;
+  will-change: transform;
+}
+.cursor.hover {
+  width: 48px;
+  height: 48px;
+  background: rgba(212, 168, 83, 0.1);
+  border-color: var(--accent);
+}
+.cursor.click {
+  transform: translate(-50%, -50%) scale(0.85);
+}
+@media (pointer: coarse) {
+  .cursor { display: none; }
+}
+
+/* ========== BACK TO TOP ========== */
+.back-to-top {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 48px;
+  height: 48px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s var(--ease), transform 0.4s var(--spring), border-color 0.3s var(--ease), background 0.3s var(--ease);
+  pointer-events: none;
+}
+.back-to-top.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+.back-to-top:hover {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+}
+.back-to-top:active {
+  transform: scale(0.92) translateY(1px);
+}
+.back-to-top svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--text-muted);
+  transition: stroke 0.3s var(--ease);
+}
+.back-to-top:hover svg { stroke: var(--accent); }
+
+/* ========== CUSTOM SCROLLBAR ========== */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--text-dim);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* ========== PORTFOLIO SHIMMER ========== */
+.portfolio-img-inner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 25%,
+    rgba(212, 168, 83, 0.04) 37%,
+    transparent 50%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ========== METRIC COUNTER ========== */
+.metric-num {
+  overflow: hidden;
+}
+
+/* ========== SECTION TITLE HIGHLIGHT ========== */
+.section-title em {
+  font-style: italic;
+  color: var(--accent);
+  position: relative;
+}
+.section-title em::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: width 0.8s var(--ease-out);
+}
+.reveal.visible .section-title em::after,
+.section-title.visible em::after {
+  width: 100%;
+}
+
+/* ========== PROCESS STEP HOVER LINE ========== */
+.process-step::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: width 0.5s var(--ease);
+}
+.process-step:hover::after { width: 100%; }
+
+/* ========== NAV CTA GLOW ========== */
+.nav-cta::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 6px;
+  background: var(--accent);
+  filter: blur(12px);
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.4s var(--ease);
+}
+.nav-cta {
+  position: relative;
+}
+.nav-cta:hover::after { opacity: 0.25; }
 </style>
 </head>
 <body>
 
+<!-- PRELOADER -->
+<div class="preloader" id="preloader">
+  <div class="preloader-logo">Verso<span>.</span></div>
+  <div class="preloader-bar"><div class="preloader-bar-fill"></div></div>
+</div>
+
 <a href="#main" class="skip-link">Aller au contenu</a>
+<div class="cursor" id="cursor" aria-hidden="true"></div>
 <div class="grain" aria-hidden="true"></div>
 <div class="progress-bar" aria-hidden="true"></div>
 <div class="mesh" aria-hidden="true">
@@ -1315,6 +1529,11 @@ textarea.form-input {
   </div>
 </section>
 
+<!-- BACK TO TOP -->
+<button class="back-to-top" id="backToTop" aria-label="Retour en haut">
+  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
 <!-- FOOTER -->
 <footer class="footer">
   <div class="footer-top">
@@ -1356,6 +1575,43 @@ textarea.form-input {
 </footer>
 
 <script>
+/* ========== PRELOADER ========== */
+const preloader = document.getElementById('preloader');
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    preloader.classList.add('done');
+    document.body.style.overflow = '';
+  }, 2200);
+});
+document.body.style.overflow = 'hidden';
+
+/* ========== CUSTOM CURSOR ========== */
+const cursor = document.getElementById('cursor');
+let cursorX = 0, cursorY = 0, clientX = 0, clientY = 0;
+const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+
+if (!isTouchDevice) {
+  document.addEventListener('mousemove', (e) => {
+    clientX = e.clientX;
+    clientY = e.clientY;
+  });
+  function animateCursor() {
+    cursorX += (clientX - cursorX) * 0.15;
+    cursorY += (clientY - cursorY) * 0.15;
+    cursor.style.transform = `translate(${cursorX - 10}px, ${cursorY - 10}px)`;
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+
+  const hoverTargets = 'a, button, .service-card, .portfolio-card, .testimonial-dot, .process-step, input, textarea';
+  document.querySelectorAll(hoverTargets).forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+  });
+  document.addEventListener('mousedown', () => cursor.classList.add('click'));
+  document.addEventListener('mouseup', () => cursor.classList.remove('click'));
+}
+
 /* ========== PROGRESS BAR ========== */
 const progressBar = document.querySelector('.progress-bar');
 function updateProgress() {
@@ -1369,6 +1625,15 @@ const nav = document.querySelector('.nav');
 function updateNav() {
   nav.classList.toggle('scrolled', window.scrollY > 60);
 }
+
+/* ========== BACK TO TOP ========== */
+const backToTop = document.getElementById('backToTop');
+function updateBackToTop() {
+  backToTop.classList.toggle('visible', window.scrollY > 600);
+}
+backToTop.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
 
 /* ========== MOBILE MENU ========== */
 const toggle = document.querySelector('.nav-toggle');
@@ -1400,7 +1665,7 @@ const revealObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
 reveals.forEach(el => revealObserver.observe(el));
 
-/* ========== COUNTER ANIMATION ========== */
+/* ========== COUNTER ANIMATION (Hero Stats) ========== */
 const counters = document.querySelectorAll('[data-count]');
 const counterObserver = new IntersectionObserver((entries) => {
   entries.forEach(e => {
@@ -1445,6 +1710,19 @@ document.querySelectorAll('.service-card').forEach(card => {
   });
 });
 
+/* ========== MAGNETIC BUTTONS ========== */
+document.querySelectorAll('.btn-primary, .btn-secondary, .nav-cta').forEach(btn => {
+  btn.addEventListener('mousemove', (e) => {
+    const rect = btn.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+  });
+  btn.addEventListener('mouseleave', () => {
+    btn.style.transform = '';
+  });
+});
+
 /* ========== PORTFOLIO DRAG SCROLL ========== */
 const scrollEl = document.getElementById('portfolioScroll');
 let isDragging = false, startX, scrollLeft;
@@ -1461,6 +1739,16 @@ scrollEl.addEventListener('mousemove', (e) => {
   const x = e.pageX - scrollEl.offsetLeft;
   scrollEl.scrollLeft = scrollLeft - (x - startX) * 1.5;
 });
+
+/* ========== PARALLAX MESH ORBS ========== */
+const meshOrbs = document.querySelectorAll('.mesh-orb');
+function updateParallax() {
+  const scrollY = window.scrollY;
+  meshOrbs.forEach((orb, i) => {
+    const speed = [0.03, -0.02, 0.015][i] || 0.02;
+    orb.style.transform = `translateY(${scrollY * speed}px)`;
+  });
+}
 
 /* ========== TESTIMONIALS ========== */
 const testimonials = [
@@ -1558,6 +1846,8 @@ window.addEventListener('scroll', () => {
     requestAnimationFrame(() => {
       updateProgress();
       updateNav();
+      updateBackToTop();
+      updateParallax();
       ticking = false;
     });
     ticking = true;
@@ -1567,6 +1857,7 @@ window.addEventListener('scroll', () => {
 /* Init */
 updateProgress();
 updateNav();
+updateBackToTop();
 </script>
 </body>
 </html>
